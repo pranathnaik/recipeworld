@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key key}) : super(key: key);
+class SignIn extends StatelessWidget {
+  const SignIn({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +65,11 @@ class Login extends StatelessWidget {
                     shape: StadiumBorder(),
                     primary: AppColors.primaryGreen,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.homeRoute);
+                  },
                   child: Text(
-                    'Login',
+                    'Signin',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -84,7 +87,9 @@ class Login extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: height / 55),
                 width: width,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutes.signUp);
+                  },
                   child: Text(
                     'Create Account',
                     textAlign: TextAlign.center,

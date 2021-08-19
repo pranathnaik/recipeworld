@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 import 'package:recipeworld/config/colors.dart';
 
@@ -7,7 +8,7 @@ class PostCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = SizeConfig.getWidth(context);
+    var width = MediaQuery.of(context).size.height;
     var height = SizeConfig.getHeight(context);
     return Expanded(
       child: ListView.builder(
@@ -18,7 +19,7 @@ class PostCards extends StatelessWidget {
             return Container(
               margin: EdgeInsets.symmetric(
                 vertical: height / 40,
-                horizontal: width / 22,
+                horizontal: width / 30,
               ),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -26,11 +27,22 @@ class PostCards extends StatelessWidget {
                     Container(
                       color: AppColors.primaryGreen,
                       child: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 12),
                         child: Row(children: [
-                          Text(
-                            'Ramesh khan',
-                            style: TextStyle(),
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                "https://i.pinimg.com/originals/a0/e9/8e/a0e98efbf3b9e832e508f8e667caec22.jpg"),
+                          ),
+                          SizedBox(width: 15),
+                          InkWell(
+                            onTap: () {
+                              print('name tap');
+                            },
+                            child: Text(
+                              'Ramesh khan',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ]),
                       ),
@@ -44,14 +56,33 @@ class PostCards extends StatelessWidget {
                       color: AppColors.secondaryGreen,
                       child: Padding(
                         padding: const EdgeInsets.all(12),
-                        child: Column(children: [
-                          Text(
-                            'Vegetables',
-                          ),
-                          Text(
-                            'vegetable is vegetable lorem ipsum',
-                          ),
-                        ]),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Vegetables',
+                                    ),
+                                    Text(
+                                      'vegetable is vegetable lorem ipsum hello 123 hdfjhadfjhasdkfjadhskfjhds',
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ]),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.postDetails);
+                              },
+                              child: Text('View Recipe',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Container(
@@ -68,11 +99,10 @@ class PostCards extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              InkWell(
-                                  onTap: () {}, child: Icon(Icons.thumb_up)),
-                              InkWell(
-                                  onTap: () {}, child: Icon(Icons.save_alt)),
-                              InkWell(onTap: () {}, child: Icon(Icons.share)),
+                              InkWell(child: Icon(Icons.thumb_up)),
+                              // InkWell(
+                              //     onTap: () {}, child: Icon(Icons.save_alt)),
+                              // InkWell(onTap: () {}, child: Icon(Icons.share)),
                             ],
                           ),
                         ))

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 
 class SignUp extends StatelessWidget {
@@ -84,7 +85,9 @@ class SignUp extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: height / 55),
                 width: width,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutes.signIn);
+                  },
                   child: Text(
                     'Sign In',
                     textAlign: TextAlign.center,
