@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/widgets/PostCards.dart';
-
 import 'package:recipeworld/config/size.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,8 +16,23 @@ class HomePage extends StatelessWidget {
         title: Text(
           "It's Cooking Time!",
           style: TextStyle(
-              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+            fontSize: 25,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        actions: [
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.add_box,
+                  size: 30.0,
+                  color: Colors.black,
+                ),
+              )),
+        ],
       ),
       body: Container(
         child: Column(
@@ -30,7 +44,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: 28,
         elevation: 0,
         unselectedIconTheme: IconThemeData(
           color: AppColors.primaryGrey,
@@ -52,9 +65,7 @@ class HomePage extends StatelessWidget {
             label: '.',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite_border_rounded,
-            ),
+            icon: Icon(Icons.trending_up),
             label: '.',
           ),
           BottomNavigationBarItem(

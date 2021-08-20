@@ -18,7 +18,7 @@ class PostCards extends StatelessWidget {
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.symmetric(
-                vertical: height / 40,
+                vertical: height / 50,
                 horizontal: width / 30,
               ),
               child: Column(

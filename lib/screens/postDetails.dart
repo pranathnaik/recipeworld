@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 
 class PostDetails extends StatelessWidget {
@@ -13,10 +14,28 @@ class PostDetails extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              child: Image.network(
-                "https://blogs.biomedcentral.com/on-medicine/wp-content/uploads/sites/6/2019/09/iStock-1131794876.t5d482e40.m800.xtDADj9SvTVFjzuNeGuNUUGY4tm5d6UGU5tkKM0s3iPk-620x342.jpg",
-              ),
+            Stack(
+              children: [
+                Container(
+                  width: width,
+                  color: Colors.grey,
+                  height: height / 3.5,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1454793147212-9e7e57e89a4f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmlnfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: BackButton(color: Colors.blueAccent)),
+                ),
+              ],
             ),
             Container(
               decoration: BoxDecoration(
@@ -44,6 +63,12 @@ class PostDetails extends StatelessWidget {
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ],
                       ),
+                      InkWell(
+                          onTap: () => {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.profilePage)
+                              },
+                          child: Text("View Profile")),
                     ],
                   ),
                 ),
