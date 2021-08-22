@@ -66,7 +66,7 @@ class SignIn extends StatelessWidget {
                     primary: AppColors.primaryGreen,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.homeRoute);
+                    Navigator.pushNamed(context, AppRoutes.rootApp);
                   },
                   child: Text(
                     'Signin',

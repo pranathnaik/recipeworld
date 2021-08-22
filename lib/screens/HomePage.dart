@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/widgets/PostCards.dart';
 import 'package:recipeworld/config/size.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var width = SizeConfig.getWidth(context);
@@ -42,40 +48,6 @@ class HomePage extends StatelessWidget {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        unselectedIconTheme: IconThemeData(
-          color: AppColors.primaryGrey,
-        ),
-        selectedIconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_rounded,
-            ),
-            label: '.',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search_rounded,
-            ),
-            label: '.',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.trending_up),
-            label: '.',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_outlined,
-            ),
-            label: '.',
-          ),
-        ],
-        showUnselectedLabels: false,
       ),
     );
   }

@@ -19,94 +19,95 @@ class PostCards extends StatelessWidget {
             return Container(
               margin: EdgeInsets.symmetric(
                 vertical: height / 50,
-                horizontal: width / 30,
+                horizontal: width / 45,
               ),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      color: AppColors.primaryGreen,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 12),
-                        child: Row(children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://i.pinimg.com/originals/a0/e9/8e/a0e98efbf3b9e832e508f8e667caec22.jpg"),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    color: AppColors.primaryGreen,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      child: Row(children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              "https://i.pinimg.com/originals/a0/e9/8e/a0e98efbf3b9e832e508f8e667caec22.jpg"),
+                        ),
+                        SizedBox(width: 15),
+                        InkWell(
+                          onTap: () {
+                            print('name tap');
+                          },
+                          child: Text(
+                            'Ramesh khan',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(width: 15),
+                        ),
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: Image.network(
+                        "https://blogs.biomedcentral.com/on-medicine/wp-content/uploads/sites/6/2019/09/iStock-1131794876.t5d482e40.m800.xtDADj9SvTVFjzuNeGuNUUGY4tm5d6UGU5tkKM0s3iPk-620x342.jpg",
+                        fit: BoxFit.cover),
+                  ),
+                  Container(
+                    color: AppColors.secondaryGreen,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Vegetables',
+                                  ),
+                                  Text(
+                                    'vegetable is vegetable lorem ipsum hello 123 hdfjhadfjhasdkfjadhskfjhds',
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ]),
+                          ),
                           InkWell(
                             onTap: () {
-                              print('name tap');
+                              Navigator.pushNamed(
+                                  context, AppRoutes.postDetails);
                             },
-                            child: Text(
-                              'Ramesh khan',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                            child: Text('View Recipe',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
-                        ]),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Image.network(
-                          "https://blogs.biomedcentral.com/on-medicine/wp-content/uploads/sites/6/2019/09/iStock-1131794876.t5d482e40.m800.xtDADj9SvTVFjzuNeGuNUUGY4tm5d6UGU5tkKM0s3iPk-620x342.jpg",
-                          fit: BoxFit.cover),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryGreen,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                      // color: AppColors.primaryGreen,
                     ),
-                    Container(
-                      color: AppColors.secondaryGreen,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Vegetables',
-                                    ),
-                                    Text(
-                                      'vegetable is vegetable lorem ipsum hello 123 hdfjhadfjhasdkfjadhskfjhds',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ]),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, AppRoutes.postDetails);
-                              },
-                              child: Text('View Recipe',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ),
-                          ],
-                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(child: Icon(Icons.thumb_up)),
+                          // InkWell(
+                          //     onTap: () {}, child: Icon(Icons.save_alt)),
+                          // InkWell(onTap: () {}, child: Icon(Icons.share)),
+                        ],
                       ),
                     ),
-                    Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryGreen,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                          // color: AppColors.primaryGreen,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              InkWell(child: Icon(Icons.thumb_up)),
-                              // InkWell(
-                              //     onTap: () {}, child: Icon(Icons.save_alt)),
-                              // InkWell(onTap: () {}, child: Icon(Icons.share)),
-                            ],
-                          ),
-                        ))
-                  ]),
+                  ),
+                ],
+              ),
               height: height / 2.6,
             );
           }),
