@@ -9,54 +9,65 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   final TextEditingController _input = TextEditingController();
   String valueChoose;
-  List listItem = ["Item 1", "Item 1", "Item 1", "Item 1",];
+  List listItem = [
+    "Item 1",
+    "Item 1",
+    "Item 1",
+    "Item 1",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white24,
-          shadowColor: Colors.white,
-          elevation: 0,
-          leading: BackButton(
-            color: Colors.black,
-          ),
-          actions: [Row(
+      appBar: AppBar(
+        backgroundColor: Colors.white24,
+        shadowColor: Colors.white,
+        elevation: 0,
+        leading: BackButton(
+          color: Colors.black,
+        ),
+        actions: [
+          Row(
             children: [
               Container(
-                child: Text("Post",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),),
+                child: Text(
+                  "Post",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               SizedBox(
                 width: 10,
               ),
-              Icon(Icons.send_rounded,
-              color: Colors.black,),
+              Icon(
+                Icons.send_rounded,
+                color: Colors.black,
+              ),
               SizedBox(
                 width: 10,
               ),
             ],
           ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 32.0),
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.grey,
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  child: Icon(Icons.camera_enhance),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Column(children: [
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.grey,
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                child: Icon(Icons.camera_enhance),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Column(
+                children: [
                   TextField(
                     decoration: InputDecoration(
                       hintText: "Enter Recipe Title",
@@ -90,21 +101,20 @@ class _CreatePostState extends State<CreatePost> {
                         padding: EdgeInsets.all(8),
                         decoration: ShapeDecoration(
                             color: AppColors.secondaryOrange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          )
-                        ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            )),
                         child: DropdownButton(
-
+                          underline: Container(color: Colors.transparent),
                           hint: Text("Select Categories"),
                           dropdownColor: AppColors.secondaryOrange,
                           value: valueChoose,
-                          onChanged: (newValue){
-                            setState((){
+                          onChanged: (newValue) {
+                            setState(() {
                               valueChoose = newValue;
                             });
                           },
-                          items: listItem.map((valueItem){
+                          items: listItem.map((valueItem) {
                             return DropdownMenuItem(
                               child: Text(valueItem),
                               value: valueItem,
@@ -112,7 +122,6 @@ class _CreatePostState extends State<CreatePost> {
                           }).toList(),
                         ),
                       ),
-
                       SizedBox(
                         width: 15,
                       ),
@@ -125,7 +134,8 @@ class _CreatePostState extends State<CreatePost> {
                             filled: true,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.all(Radius.circular(30))),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30))),
                           ),
                         ),
                       ),
@@ -135,16 +145,16 @@ class _CreatePostState extends State<CreatePost> {
                     height: 20,
                   ),
                   TextField(
-                      controller: _input,
-                      onSubmitted: (input) {
-                        if (_input.text.isNotEmpty) {
-                          setState(() {
-                            intrests.add(_input.text);
-                            _input.clear();
-                          });
-                        }
-                        print(intrests);
-                      },
+                    controller: _input,
+                    onSubmitted: (input) {
+                      if (_input.text.isNotEmpty) {
+                        setState(() {
+                          intrests.add(_input.text);
+                          _input.clear();
+                        });
+                      }
+                      print(intrests);
+                    },
                     decoration: InputDecoration(
                       hintText: "Add Ingredients",
                       fillColor: AppColors.secondaryOrange,
@@ -154,36 +164,35 @@ class _CreatePostState extends State<CreatePost> {
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                     ),
                   ),
-
                   SizedBox(
                     height: 20,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                    child:
-                    Wrap(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                    child: Wrap(
                       runSpacing: 6,
                       spacing: 6,
                       children: List.from(intrests.map((e) => chipBuilder(
-                        onTap: () {
-                          setState(() {
-                            intrests.remove(e);
-                          });
-                        },
-                        title: e,
-                      ))),
+                            onTap: () {
+                              setState(() {
+                                intrests.remove(e);
+                              });
+                            },
+                            title: e,
+                          ))),
                     ),
                   ),
-                ],),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
-
 
 List<String> intrests = [];
 Widget chipBuilder({String title, Function onTap}) {
@@ -198,9 +207,7 @@ Widget chipBuilder({String title, Function onTap}) {
       children: [
         Text(
           title ?? "data",
-          style: TextStyle(
-            color: Colors.black
-          ),
+          style: TextStyle(color: Colors.black),
         ),
         SizedBox(width: 4),
         GestureDetector(

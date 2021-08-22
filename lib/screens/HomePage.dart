@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.createPost);
+                },
                 child: Icon(
                   Icons.add_box,
                   size: 30.0,
