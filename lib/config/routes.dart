@@ -7,4 +7,5 @@ class AppRoutes {
   static String searchPage = "/searchpage";
   static String rootApp = "/rootapp";
   static String trendingPage = "/trendingpage";
+  static String createPost = "/createpost";
 }
