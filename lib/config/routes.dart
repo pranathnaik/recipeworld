@@ -4,4 +4,5 @@ class AppRoutes {
   static String postDetails = "/postdetails";
   static String profilePage = "/profilepage";
   static String signUp = "/signUp";
+  static String createPost = "/createpost";
 }
