@@ -29,6 +29,7 @@ dependencies:
   avatar_view: ^1.0.1
   circular_profile_avatar: ^2.0.0
   cupertino_icons: ^1.0.2
+  image_picker: ^0.6.6+5
 
 dev_dependencies:
   flutter_test:

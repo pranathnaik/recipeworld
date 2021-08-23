@@ -118,6 +118,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   flutter_blurhash:
     dependency: transitive
     description:
@@ -132,6 +133,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
+=======
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.11"
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -143,14 +153,36 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.13.3"
+=======
+    version: "0.12.2"
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
   http_parser:
     dependency: transitive
     description:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "4.0.0"
+=======
+    version: "3.1.4"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.7+22"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6"
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
   matcher:
     dependency: transitive
     description:
@@ -179,6 +211,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+<<<<<<< HEAD
   path_provider:
     dependency: transitive
     description:
@@ -214,6 +247,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+=======
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
   pedantic:
     dependency: transitive
     description:
@@ -221,6 +256,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+<<<<<<< HEAD
   platform:
     dependency: transitive
     description:
@@ -228,12 +264,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
+=======
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
   plugin_platform_interface:
     dependency: transitive
     description:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.1"
   process:
     dependency: transitive
@@ -249,6 +288,9 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
+=======
+    version: "1.0.3"
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
   sky_engine:
     dependency: transitive
     description: flutter
@@ -353,5 +395,10 @@ packages:
     source: hosted
     version: "0.2.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.13.0 <3.0.0"
   flutter: ">=2.0.0"
+=======
+  dart: ">=2.12.0 <3.0.0"
+  flutter: ">=1.12.13"
+>>>>>>> 60f5b8806da9368554deed5bafac39da57d1f4e9
