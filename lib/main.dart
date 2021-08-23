@@ -3,6 +3,7 @@ import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/screens/postDetails.dart';
 import 'package:recipeworld/screens/signIn.dart';
 import 'package:recipeworld/screens/signUp.dart';
+import 'package:recipeworld/screens/profilePage.dart';
 import 'config/colors.dart';
 import 'screens/HomePage.dart';
 
@@ -19,12 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      initialRoute: AppRoutes.signIn,
+      initialRoute: AppRoutes.profilePage,
       routes: {
         AppRoutes.signIn: (context) => SignIn(),
         AppRoutes.homeRoute: (context) => HomePage(),
         AppRoutes.postDetails: (context) => PostDetails(),
-        AppRoutes.signUp: (context) => SignUp()
+        AppRoutes.signUp: (context) => SignUp(),
+        AppRoutes.profilePage: (context) => ProfilePage()
       },
     );
   }
