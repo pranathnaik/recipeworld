@@ -1,16 +1,17 @@
-# recipeworld
+# RecipeWorld🌎 (in making)
 
-A new Flutter project.
+# Introduction
+Recipe World is a mobile based app which helps users to view various types of recipes which are uploaded by the other user
 
-## Getting Started
+# Functionality
+Registration- The user can register.
+Login- The user can login after the user gets registered
+Create Post- The user can create a post where it includes title, description, image, steps, ingredients, time, etc.
+View- User can view other user posts
+Filter- The user can filter the recipe based on  categories
+Sorting- Sorting on time etc. 
+Trending section: based on likes posts will go in trending section
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
