@@ -8,4 +8,5 @@ class AppRoutes {
   static String rootApp = "/rootapp";
   static String trendingPage = "/trendingpage";
   static String createPost = "/createpost";
+  static String profileEdit = "/profileedit";
 }

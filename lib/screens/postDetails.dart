@@ -11,6 +11,7 @@ class PostDetails extends StatelessWidget {
     var width = MediaQuery.of(context).size.height;
     var height = SizeConfig.getHeight(context);
     return Scaffold(
+      backgroundColor: AppColors.backColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -38,13 +39,9 @@ class PostDetails extends StatelessWidget {
               ],
             ),
             Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.black),
-                ),
-              ),
+             
               child: Container(
-                color: AppColors.secondaryGreen,
+                color: AppColors.primaryGreen,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -58,9 +55,11 @@ class PostDetails extends StatelessWidget {
                                 "https://i.pinimg.com/originals/a0/e9/8e/a0e98efbf3b9e832e508f8e667caec22.jpg"),
                           ),
                           SizedBox(width: 15),
-                          Text('Ramesh',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(
+                            'Ramesh',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                       InkWell(
@@ -68,7 +67,11 @@ class PostDetails extends StatelessWidget {
                                 Navigator.pushNamed(
                                     context, AppRoutes.profilePage)
                               },
-                          child: Text("View Profile")),
+                          child: Text(
+                            "View Profile",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          )),
                     ],
                   ),
                 ),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "128503980316",
+    "project_id": "recipeworld-680c1",
+    "storage_bucket": "recipeworld-680c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128503980316:android:d924807450498c30051ad9",
+        "android_client_info": {
+          "package_name": "com.example.recipeworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128503980316-644mvvdk4k96eqa2tq03ln6rkrqga2oq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMK_Ah_Du6KE47RZNDCjZn_VsAY_KG6Is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128503980316-644mvvdk4k96eqa2tq03ln6rkrqga2oq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

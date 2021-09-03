@@ -11,7 +11,7 @@ class SignUp extends StatelessWidget {
     var width = SizeConfig.getWidth(context);
     var height = SizeConfig.getHeight(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -20,7 +20,7 @@ class SignUp extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: height / 50),
                 child: Image.asset(
-                  "assets/images/undraw1.png",
+                  "assets/images/signinimage.png",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -32,7 +32,7 @@ class SignUp extends StatelessWidget {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 18, vertical: 18),
                     filled: true,
-                    fillColor: AppColors.secondaryOrange,
+                    fillColor: Colors.white,
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(30))),
@@ -48,7 +48,7 @@ class SignUp extends StatelessWidget {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 18, vertical: 18),
                     filled: true,
-                    fillColor: AppColors.secondaryOrange,
+                    fillColor: Colors.white,
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(30))),
@@ -68,7 +68,7 @@ class SignUp extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     'Signup',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                   ),
                 ),
               ),
@@ -77,25 +77,23 @@ class SignUp extends StatelessWidget {
                 width: width,
                 child: Text(
                   "Already have an Account?",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: height / 55),
-                width: width,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.signIn);
-                  },
-                  child: Text(
-                    'Sign In',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.signIn);
+                },
+                child: Text(
+                  'Sign In',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                       color: AppColors.primaryOrange,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                      fontSize: 17),
                 ),
               ),
             ],

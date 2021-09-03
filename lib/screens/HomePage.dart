@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/widgets/PostCards.dart';
 import 'package:recipeworld/config/size.dart';
@@ -15,9 +16,10 @@ class _HomePageState extends State<HomePage> {
     var width = SizeConfig.getWidth(context);
     var height = SizeConfig.getHeight(context);
     return Scaffold(
+      backgroundColor: AppColors.backColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white24,
+        backgroundColor: AppColors.backColor,
         elevation: 0,
         title: Text(
           "It's Cooking Time!",
@@ -35,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.pushNamed(context, AppRoutes.createPost);
                 },
                 child: Icon(
-                  Icons.add_box,
+                  Icons.add_circle,
                   size: 30.0,
                   color: Colors.black,
                 ),

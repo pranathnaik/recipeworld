@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/screens/postDetails.dart';
+import 'package:recipeworld/screens/profileEdit.dart';
 import 'package:recipeworld/screens/rootApp.dart';
 import 'package:recipeworld/screens/searchPage.dart';
 import 'package:recipeworld/screens/signIn.dart';
 import 'package:recipeworld/screens/signUp.dart';
 import 'package:recipeworld/screens/profilePage.dart';
-import 'config/colors.dart';
 import 'package:recipeworld/screens/trendingPage.dart';
 import 'screens/HomePage.dart';
 import 'package:recipeworld/screens/createPost.dart';
@@ -24,17 +24,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      initialRoute: AppRoutes.profilePage,
+      initialRoute: AppRoutes.signIn,
       routes: {
         AppRoutes.rootApp: (context) => RootApp(),
         AppRoutes.signIn: (context) => SignIn(),
         AppRoutes.homeRoute: (context) => HomePage(),
         AppRoutes.postDetails: (context) => PostDetails(),
         AppRoutes.signUp: (context) => SignUp(),
-        AppRoutes.profilePage: (context) => ProfilePage()
+        AppRoutes.profilePage: (context) => ProfilePage(),
         AppRoutes.searchPage: (context) => SearchPage(),
         AppRoutes.trendingPage: (context) => TrendingPage(),
-        AppRoutes.createPost: (context) => CreatePost()
+        AppRoutes.createPost: (context) => CreatePost(),
+        AppRoutes.profileEdit: (context) => ProfileEdit(),
       },
     );
   }

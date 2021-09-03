@@ -18,8 +18,9 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backColor,
       appBar: AppBar(
-        backgroundColor: Colors.white24,
+        backgroundColor: AppColors.backColor,
         shadowColor: Colors.white,
         elevation: 0,
         leading: BackButton(
@@ -33,7 +34,7 @@ class _CreatePostState extends State<CreatePost> {
                   "Post",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -58,7 +59,8 @@ class _CreatePostState extends State<CreatePost> {
           child: Column(
             children: [
               Container(
-                color: Colors.grey,
+                decoration: BoxDecoration(
+                    color: Colors.grey, borderRadius: BorderRadius.circular(10)),
                 height: 200,
                 width: MediaQuery.of(context).size.width,
                 child: Icon(Icons.camera_enhance),
@@ -69,9 +71,10 @@ class _CreatePostState extends State<CreatePost> {
               Column(
                 children: [
                   TextField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       hintText: "Enter Recipe Title",
-                      fillColor: AppColors.secondaryOrange,
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -82,10 +85,11 @@ class _CreatePostState extends State<CreatePost> {
                     height: 20,
                   ),
                   TextField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     maxLines: 5,
                     decoration: InputDecoration(
                       hintText: "Preparation",
-                      fillColor: AppColors.secondaryOrange,
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -100,13 +104,16 @@ class _CreatePostState extends State<CreatePost> {
                       Container(
                         padding: EdgeInsets.all(8),
                         decoration: ShapeDecoration(
-                            color: AppColors.secondaryOrange,
+                            color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             )),
                         child: DropdownButton(
                           underline: Container(color: Colors.transparent),
-                          hint: Text("Select Categories"),
+                          hint: Text(
+                            "Select Categories",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           dropdownColor: AppColors.secondaryOrange,
                           value: valueChoose,
                           onChanged: (newValue) {
@@ -128,9 +135,10 @@ class _CreatePostState extends State<CreatePost> {
                       Container(
                         width: 150,
                         child: TextField(
+                          style: TextStyle(fontWeight: FontWeight.bold),
                           decoration: InputDecoration(
                             hintText: "Time",
-                            fillColor: AppColors.secondaryOrange,
+                            fillColor: Colors.white,
                             filled: true,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -155,9 +163,10 @@ class _CreatePostState extends State<CreatePost> {
                       }
                       print(intrests);
                     },
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       hintText: "Add Ingredients",
-                      fillColor: AppColors.secondaryOrange,
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -207,7 +216,7 @@ Widget chipBuilder({String title, Function onTap}) {
       children: [
         Text(
           title ?? "data",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
         ),
         SizedBox(width: 4),
         GestureDetector(
@@ -215,7 +224,7 @@ Widget chipBuilder({String title, Function onTap}) {
           child: Icon(
             Icons.clear,
             color: Colors.red,
-            size: 20,
+            size: 25,
           ),
         ),
       ],

@@ -12,7 +12,7 @@ class SearchPage extends StatelessWidget {
     var height = SizeConfig.getHeight(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backColor,
       body: SafeArea(
         child: Column(
           children: [

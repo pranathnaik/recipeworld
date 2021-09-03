@@ -41,7 +41,8 @@ class PostCards extends StatelessWidget {
                           },
                           child: Text(
                             'Ramesh khan',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
                           ),
                         ),
                       ]),
@@ -65,20 +66,15 @@ class PostCards extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Vegetables',
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     'vegetable is vegetable lorem ipsum hello 123 hdfjhadfjhasdkfjadhskfjhds',
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ]),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, AppRoutes.postDetails);
-                            },
-                            child: Text('View Recipe',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
@@ -99,6 +95,15 @@ class PostCards extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           InkWell(child: Icon(Icons.thumb_up)),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, AppRoutes.postDetails);
+                            },
+                            child: Text('View Recipe',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15)),
+                          ),
                           // InkWell(
                           //     onTap: () {}, child: Icon(Icons.save_alt)),
                           // InkWell(onTap: () {}, child: Icon(Icons.share)),

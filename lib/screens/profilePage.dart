@@ -1,62 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:recipeworld/widgets/profileCards.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
+import 'package:recipeworld/widgets/userPostCards.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfileDesign(),
-    );
-  }
-}
-
-class ProfileDesign extends StatefulWidget {
-  @override
-  _ProfileDesignState createState() => _ProfileDesignState();
-}
-
-class _ProfileDesignState extends State<ProfileDesign> {
-  String profilepic = "https://picsum.photos/200/300?grayscale";
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backColor,
+        automaticallyImplyLeading: false,
         elevation: 0.0,
         title: Text(
           "Your Profile",
-          style: TextStyle(
-            color: Colors.black,
-          ),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.profileEdit);
+              },
+              child: Icon(
+                Icons.edit_rounded,
+                color: Colors.black,
+              ),
+            ),
+          )
+        ],
       ),
-      body: Center(
+      body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: 56,
-              backgroundImage: NetworkImage(profilepic),
+              radius: 50,
+              backgroundImage: NetworkImage(
+                  'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
             ),
             SizedBox(
-              height: 15.0,
+              height: 10.0,
             ),
             Text(
               "Sumant Mulgaonkar",
               style: TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 22,
               ),
             ),
             SizedBox(
               height: 10.0,
             ),
             Text(
-              "<caption>",
+              "i am bhumant bhutar",
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w300,
@@ -67,8 +65,6 @@ class _ProfileDesignState extends State<ProfileDesign> {
               height: 10.0,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Column(
@@ -88,42 +84,21 @@ class _ProfileDesignState extends State<ProfileDesign> {
             SizedBox(
               height: 15.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FlatButton(
-                  onPressed: () {},
-                  color: Colors.black,
-                  splashColor: Colors.white10,
-                  child:
-                      Text("Subscribe", style: TextStyle(color: Colors.white)),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 50.0, vertical: 8.0),
-                ),
-                SizedBox(
-                  width: 12.0,
-                ),
-                OutlineButton(
-                  onPressed: () {},
-                  child: Text("Message"),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 50.0, vertical: 8.0),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(11.0),
-              child: Divider(
-                height: 22.0,
-                thickness: 0.6,
-                color: Colors.black,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                primary: AppColors.primaryGreen,
+                shape: StadiumBorder(),
               ),
+              onPressed: () {},
+              child: Text('Subscribe'),
             ),
-            Expanded(
-              child: Container(
-                child: ProfileCards(),
-              ),
+            Divider(
+              height: 22.0,
+              thickness: 0.6,
+              color: Colors.black,
             ),
+            UserPostCards()
           ],
         ),
       ),

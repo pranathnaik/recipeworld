@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
-
 import 'package:recipeworld/screens/HomePage.dart';
+import 'package:recipeworld/screens/profilePage.dart';
 import 'package:recipeworld/screens/searchPage.dart';
 import 'package:recipeworld/screens/trendingPage.dart';
 
@@ -18,7 +18,7 @@ class RootAppState extends State<RootApp> {
     HomePage(),
     SearchPage(),
     TrendingPage(),
-    TrendingPage(),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,7 @@ class RootAppState extends State<RootApp> {
         ),
         items: [
           BottomNavigationBarItem(
+            backgroundColor: AppColors.backColor,
             icon: Icon(
               Icons.home_rounded,
             ),
