@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/screens/postDetails.dart';
@@ -8,10 +9,13 @@ import 'package:recipeworld/screens/signIn.dart';
 import 'package:recipeworld/screens/signUp.dart';
 import 'package:recipeworld/screens/profilePage.dart';
 import 'package:recipeworld/screens/trendingPage.dart';
+import 'package:recipeworld/screens/verifyScreen.dart';
 import 'screens/HomePage.dart';
 import 'package:recipeworld/screens/createPost.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -36,6 +40,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.trendingPage: (context) => TrendingPage(),
         AppRoutes.createPost: (context) => CreatePost(),
         AppRoutes.profileEdit: (context) => ProfileEdit(),
+        AppRoutes.verifyScreen: (context) => VerifyScreen()
       },
     );
   }

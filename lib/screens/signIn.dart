@@ -1,10 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
+import 'package:toast/toast.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({Key key}) : super(key: key);
+
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  
+  String _email, _password;
+  final auth = FirebaseAuth.instance;
+  checkAuthentication() async {
+    auth.authStateChanges().listen((user) {
+      if (user != null) {
+        print(user);
+        Navigator.pushNamed(context, AppRoutes.rootApp);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentication();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +53,12 @@ class SignIn extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: height / 55),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _email = value.trim();
+                    });
+                  },
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                     contentPadding:
@@ -43,12 +75,18 @@ class SignIn extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: height / 55),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _password = value.trim();
+                    });
+                  },
+                  obscureText: true,
                   style: TextStyle(fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 18, vertical: 18),
                     filled: true,
-                   fillColor: Colors.white,
+                    fillColor: Colors.white,
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(30))),
@@ -66,7 +104,7 @@ class SignIn extends StatelessWidget {
                     primary: AppColors.primaryGreen,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.rootApp);
+                    _signin(_email, _password);
                   },
                   child: Text(
                     'Signin',
@@ -101,5 +139,17 @@ class SignIn extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _signin(String _email, String _password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: _email, password: _password);
+
+      Navigator.pushNamed(context, AppRoutes.rootApp);
+    } on FirebaseAuthException catch (e) {
+      Toast.show(e.message, context,
+          backgroundColor: Colors.redAccent, duration: 5);
+      print(e.message);
+    }
   }
 }

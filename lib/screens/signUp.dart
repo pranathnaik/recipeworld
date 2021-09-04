@@ -1,11 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
+import 'package:toast/toast.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({Key key}) : super(key: key);
 
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  String _email, _password;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     var width = SizeConfig.getWidth(context);
@@ -27,6 +36,11 @@ class SignUp extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: height / 55),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _email = value.trim();
+                    });
+                  },
                   style: TextStyle(fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                     contentPadding:
@@ -43,6 +57,12 @@ class SignUp extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: height / 55),
                 child: TextField(
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      _password = value.trim();
+                    });
+                  },
                   style: TextStyle(fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                     contentPadding:
@@ -65,7 +85,9 @@ class SignUp extends StatelessWidget {
                     shape: StadiumBorder(),
                     primary: AppColors.primaryGreen,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    _signup(_email, _password);
+                  },
                   child: Text(
                     'Signup',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
@@ -101,5 +123,16 @@ class SignUp extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _signup(String _email, String _password) async {
+    try {
+      await auth.createUserWithEmailAndPassword(
+          email: _email, password: _password);
+      Navigator.pushNamed(context, AppRoutes.verifyScreen);
+    } on FirebaseAuthException catch (e) {
+      Toast.show(e.message, context,
+          duration: 3, backgroundColor: Colors.redAccent);
+    }
   }
 }

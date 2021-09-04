@@ -9,4 +9,5 @@ class AppRoutes {
   static String trendingPage = "/trendingpage";
   static String createPost = "/createpost";
   static String profileEdit = "/profileedit";
+  static String verifyScreen = "/verifyscreen";
 }
