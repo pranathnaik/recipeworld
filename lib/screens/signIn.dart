@@ -17,20 +17,20 @@ class _SignInState extends State<SignIn> {
   
   String _email, _password;
   final auth = FirebaseAuth.instance;
-  checkAuthentication() async {
-    auth.authStateChanges().listen((user) {
-      if (user != null) {
-        print(user);
-        Navigator.pushNamed(context, AppRoutes.rootApp);
-      }
-    });
-  }
+  // checkAuthentication() async {
+  //   auth.authStateChanges().listen((user) {
+  //     if (user != null) {
+  //       print(user);
+  //       Navigator.pushNamed(context, AppRoutes.rootApp);
+  //     }
+  //   });
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    this.checkAuthentication();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // this.checkAuthentication();
+  // }
 
   @override
   Widget build(BuildContext context) {

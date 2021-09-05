@@ -14,7 +14,7 @@ import 'screens/HomePage.dart';
 import 'package:recipeworld/screens/createPost.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
