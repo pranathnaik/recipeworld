@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
+import 'package:recipeworld/screens/rootApp.dart';
 import 'package:toast/toast.dart';
 
 class SignIn extends StatefulWidget {
@@ -14,14 +15,17 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  
   String _email, _password;
   final auth = FirebaseAuth.instance;
   checkAuthentication() async {
     auth.authStateChanges().listen((user) {
       if (user != null) {
         print(user);
-        Navigator.pushNamed(context, AppRoutes.rootApp);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => RootApp(),
+          ),
+        );
       }
     });
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
+import 'package:recipeworld/screens/rootApp.dart';
 import 'package:toast/toast.dart';
 
 class SignUp extends StatefulWidget {
@@ -15,6 +16,23 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String _email, _password;
   final auth = FirebaseAuth.instance;
+  checkAuthentication() {
+    auth.authStateChanges().listen((user) {
+      if (user != null) {
+        print(user.email);
+        Navigator.of(context).popAndPushNamed(
+          AppRoutes.rootApp,
+        );
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentication();
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = SizeConfig.getWidth(context);
