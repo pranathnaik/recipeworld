@@ -16,22 +16,19 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String _email, _password;
   final auth = FirebaseAuth.instance;
-  // checkAuthentication() {
-  //   auth.authStateChanges().listen((user) {
-  //     if (user != null) {
-  //       print(user.email);
-  //       Navigator.of(context).popAndPushNamed(
-  //         AppRoutes.rootApp,
-  //       );
-  //     }
-  //   });
-  // }
+  checkAuthentication() async {
+    auth.authStateChanges().listen((user) async {
+      if (user != null) {
+      
+      }
+    });
+  }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   this.checkAuthentication();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentication();
+  }
 
   @override
   Widget build(BuildContext context) {

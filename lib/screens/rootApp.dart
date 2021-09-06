@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/screens/HomePage.dart';
 import 'package:recipeworld/screens/profilePage.dart';
 import 'package:recipeworld/screens/searchPage.dart';
@@ -13,6 +15,21 @@ class RootApp extends StatefulWidget {
 }
 
 class RootAppState extends State<RootApp> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  checkAuthentification() async {
+    _auth.authStateChanges().listen((user) {
+      if (user == null) {
+        Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentification();
+  }
+
   int currentIndex = 0;
   final screens = [
     HomePage(),

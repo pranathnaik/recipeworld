@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      initialRoute: AppRoutes.signIn,
+      initialRoute: AppRoutes.rootApp,
       routes: {
         AppRoutes.rootApp: (context) => RootApp(),
         AppRoutes.signIn: (context) => SignIn(),
