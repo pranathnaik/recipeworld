@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:recipeworld/screens/profilePage.dart';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class ProfileEdit extends StatefulWidget {
   @override
@@ -11,37 +17,55 @@ class ProfileEdit extends StatefulWidget {
 
 class _ProfileEditState extends State<ProfileEdit> {
   String uname, ubio;
+  File image;
+  String imgUrl;
 
-  getUserName(name){
+  getUserName(name) {
     this.uname = name;
     print(this.uname);
   }
-  getUserBio(bio){
+
+  getUserBio(bio) {
     this.ubio = bio;
   }
 
-  saveUser() {
-    final database = FirebaseFirestore.instance;
-    // DocumentReference documentReference = FirebaseFirestore.instance.collection("users").doc(uname);
-    DocumentReference documentReference = FirebaseFirestore.instance.collection("users").doc(getCurrentUID().toString());
+  saveUser() async {
+    var storageImage = FirebaseStorage.instance
+        .ref()
+        .child("users")
+        .child("profile")
+        .child(image.path);
+    var task = storageImage.putFile(image);
+    imgUrl = await (await task).ref.getDownloadURL();
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("users")
+        .doc(getCurrentUID().toString());
     Map<String, dynamic> users = {
-      "UserId" : getCurrentUID,
-      "UserName" : uname,
-      "UserBio" : ubio,
+      "UserId": getCurrentUID().toString(),
+      "UserName": uname,
+      "UserBio": ubio,
+      "ProfileImage": imgUrl
     };
 
     documentReference.set(users).whenComplete(() {
-      print("$uname created");
-    }
-    ).catchError((e) => print(e));
+      Navigator.pushNamed(context, AppRoutes.rootApp);
+    }).catchError((e) => print(e));
   }
 
-  Future<String> getCurrentUID() async{
+  getCurrentUID() {
     final FirebaseAuth auth = FirebaseAuth.instance;
-    final User user = await auth.currentUser;
+    final User user = auth.currentUser;
     final String uid = user.uid;
     print(uid);
     return uid;
+  }
+
+  //image
+  Future getImage() async {
+    var img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      image = img;
+    });
   }
 
   @override
@@ -61,8 +85,8 @@ class _ProfileEditState extends State<ProfileEdit> {
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 17),
-              child: ElevatedButton(
-                onPressed: (){
+              child: InkWell(
+                onTap: () {
                   saveUser();
                 },
                 child: Center(
@@ -84,9 +108,14 @@ class _ProfileEditState extends State<ProfileEdit> {
             child: Container(
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: AssetImage("assets/images/dp1.jpg"),
+                  InkWell(
+                    onTap: () => getImage(),
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: image != null
+                          ? FileImage(image)
+                          : NetworkImage("null"),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: height / 55),
@@ -103,7 +132,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 BorderRadius.all(Radius.circular(30))),
                         hintText: 'name',
                       ),
-                      onChanged: (String uname){
+                      onChanged: (String uname) {
                         getUserName(uname);
                       },
                     ),
@@ -124,7 +153,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 BorderRadius.all(Radius.circular(30))),
                         hintText: 'Bio',
                       ),
-                      onChanged: (String ubio){
+                      onChanged: (String ubio) {
                         getUserBio(ubio);
                       },
                     ),
@@ -135,5 +164,4 @@ class _ProfileEditState extends State<ProfileEdit> {
           ),
         ));
   }
-
 }

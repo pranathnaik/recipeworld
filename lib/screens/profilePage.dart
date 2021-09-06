@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
+import 'package:recipeworld/services/firebaseservice.dart';
 import 'package:recipeworld/widgets/userPostCards.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
       backgroundColor: AppColors.backColor,
       appBar: AppBar(
@@ -32,75 +40,85 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
       body: Container(
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "Sumant Mulgaonkar",
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "i am bhumant bhutar",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w300,
-                fontSize: 15,
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Subscribers",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+        child: FutureBuilder<Object>(
+            future: users.doc(FirebaseService.getCurrentUID().toString()).get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var data = snapshot.data as DocumentSnapshot;
+                return Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(data["ProfileImage"]),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      data["UserName"],
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
                       ),
-                      Text("1020")
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                primary: AppColors.primaryGreen,
-                shape: StadiumBorder(),
-              ),
-              onPressed: () {},
-              child: Text('Subscribe'),
-            ),
-            Divider(
-              height: 22.0,
-              thickness: 0.6,
-              color: Colors.black,
-            ),
-            UserPostCards()
-          ],
-        ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      data["UserBio"],
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Subscribers",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text("1020")
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: AppColors.primaryGreen,
+                        shape: StadiumBorder(),
+                      ),
+                      onPressed: () {},
+                      child: Text('Subscribe'),
+                    ),
+                    Divider(
+                      height: 22.0,
+                      thickness: 0.6,
+                      color: Colors.black,
+                    ),
+                    UserPostCards()
+                  ],
+                );
+              }
+              return Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.primaryGreen,
+              ));
+            }),
       ),
     );
   }
