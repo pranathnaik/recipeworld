@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
@@ -25,17 +26,17 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.profileEdit);
-              },
-              child: Icon(
-                Icons.edit_rounded,
-                color: Colors.black,
-              ),
-            ),
+          PopupMenuButton(
+            offset: const Offset(0.0, 60.0),
+            icon: new Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) {
+              onMenuItemSelected(context, value);
+            },
+            color: AppColors.backColor,
+            itemBuilder: (context) => [
+              PopupMenuItem(value: 0, child: Text('Edit profile')),
+              PopupMenuItem(value: 1, child: Text('Sign Out')),
+            ],
           )
         ],
       ),
@@ -121,5 +122,20 @@ class _ProfilePageState extends State<ProfilePage> {
             }),
       ),
     );
+  }
+
+  void onMenuItemSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        Navigator.pushNamed(context, AppRoutes.profileEdit);
+        break;
+
+      case 1:
+        final auth = FirebaseAuth.instance;
+        auth.signOut();
+        break;
+
+      default:
+    }
   }
 }
