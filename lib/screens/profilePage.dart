@@ -48,63 +48,69 @@ class _ProfilePageState extends State<ProfilePage> {
                 var data = snapshot.data as DocumentSnapshot;
                 return Column(
                   children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(data["ProfileImage"]),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      data["UserName"],
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      data["UserBio"],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 15,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                "Subscribers",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundImage:
+                                    NetworkImage(data["ProfileImage"]),
                               ),
-                              Text("1020")
-                            ],
+                              Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Subscribers",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text("1020",style: TextStyle(fontSize: 20),),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          primary: AppColors.primaryGreen,
+                                          shape: StadiumBorder(),
+                                        ),
+                                        onPressed: () {},
+                                        child: Text('Subscribe'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ]),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Text(
+                          data["UserName"],
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        primary: AppColors.primaryGreen,
-                        shape: StadiumBorder(),
-                      ),
-                      onPressed: () {},
-                      child: Text('Subscribe'),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          data["UserBio"],
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 15,
+                          ),
+                        ),
+                      
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ]),
                     ),
                     Divider(
                       height: 22.0,
