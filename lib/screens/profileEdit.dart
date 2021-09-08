@@ -41,7 +41,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         .collection("users")
         .doc(getCurrentUID().toString());
     Map<String, dynamic> users = {
-      "UserId": getCurrentUID().toString(),
+      "UserId": getCurrentUID.toString(),
       "UserName": uname,
       "UserBio": ubio,
       "ProfileImage": imgUrl

@@ -1,5 +1,13 @@
 import "package:flutter/material.dart";
 import 'package:recipeworld/config/colors.dart';
+import 'package:recipeworld/config/routes.dart';
+import 'package:recipeworld/config/size.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class CreatePost extends StatefulWidget {
   @override
@@ -8,13 +16,81 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   final TextEditingController _input = TextEditingController();
-  String valueChoose;
+  String valueChoose,recipeTitle,preparation,category,time,ingredients;
+  var selectedCurrency;
   List listItem = [
     "Item 1",
-    "Item 1",
-    "Item 1",
-    "Item 1",
+    "Item 2",
+    "Item 3",
+    "Item 4",
   ];
+  File image;
+  String imgUrl;
+
+  getRecipeTitle(rtitle) {
+    this.recipeTitle = rtitle;
+    print(this.recipeTitle);
+  }
+
+  getPreparation(prepar) {
+    this.preparation = prepar;
+  }
+
+  getCategory(cat) {
+    this.preparation = preparation;
+  }
+  getTime(time) {
+    this.time = time;
+  }
+  get(ingredients) {
+    this.ingredients = ingredients;
+  }
+
+
+
+  createPost() async {
+    var storageImage = FirebaseStorage.instance
+        .ref()
+        .child("users")
+        .child("posts")
+        .child(image.path);
+    var task = storageImage.putFile(image);
+    imgUrl = await (await task).ref.getDownloadURL();
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("userspost")
+        .doc(getCurrentUID().toString());
+    Map<String, dynamic> users = {
+      "UserId": getCurrentUID.toString(),
+      "ProfileImage": imgUrl,
+      "RecipeTitle": recipeTitle,
+      "Preparation": preparation,
+      "Category": category,
+      "Time": time,
+      "Indredients": ingredients
+
+    };
+
+    documentReference.set(users).whenComplete(() {
+      Navigator.pushNamed(context, AppRoutes.rootApp);
+    }).catchError((e) => print(e));
+  }
+
+  getCurrentUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    final String uid = user.uid;
+    print(uid);
+    return uid;
+  }
+
+  //image
+  Future getImage() async {
+    var img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      image = img;
+    });
+  }
+  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('recipecategories').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,13 +134,23 @@ class _CreatePostState extends State<CreatePost> {
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey, borderRadius: BorderRadius.circular(10)),
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                child: Icon(Icons.camera_enhance),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+              //   height: 200,
+              //   width: MediaQuery.of(context).size.width,
+              //   child: Icon(Icons.camera_enhance),
+              // ),
+              // InkWell(
+              //   onTap: () => getImage(),
+              //   child: GFAvatar(
+              //     radius: 100,
+              //     shape: GFAvatarShape.standard,
+              //     backgroundImage: image != null
+              //         ? FileImage(image)
+              //         : NetworkImage("null"),
+              //   ),
+              // ),
               SizedBox(
                 height: 30,
               ),
@@ -80,6 +166,9 @@ class _CreatePostState extends State<CreatePost> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                     ),
+                    onChanged: (String recipeTitle){
+                      getRecipeTitle(recipeTitle);
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -95,6 +184,9 @@ class _CreatePostState extends State<CreatePost> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                     ),
+                    onChanged: (String preparation) {
+                      getPreparation(preparation);
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -129,6 +221,7 @@ class _CreatePostState extends State<CreatePost> {
                           }).toList(),
                         ),
                       ),
+
                       SizedBox(
                         width: 15,
                       ),
@@ -145,6 +238,9 @@ class _CreatePostState extends State<CreatePost> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30))),
                           ),
+                          onChanged: (String time) {
+                            getTime(time);
+                          },
                         ),
                       ),
                     ],
@@ -193,6 +289,57 @@ class _CreatePostState extends State<CreatePost> {
                           ))),
                     ),
                   ),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: _usersStream,
+                      builder: (context, snapshot){
+                        if (!snapshot.hasData)
+                          const Text("Loading.....");
+                        else {
+                          List<DropdownMenuItem> currencyItems = [];
+                          for (int i = 0; i < snapshot.data.docs.length; i++) {
+                            DocumentSnapshot snap = snapshot.data.docs[i];
+                            currencyItems.add(
+                              DropdownMenuItem(
+                                child: Text(
+                                  snap.id,
+                                  style: TextStyle(color: Color(0xff11b719)),
+                                ),
+                                value: "${snap.id}",
+                              ),
+                            );
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.add,
+                                  size: 25.0, color: Color(0xff11b719)),
+                              SizedBox(width: 50.0),
+                              DropdownButton(
+                                items: currencyItems,
+                                onChanged: (currencyValue) {
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      'Selected Currency value is $currencyValue',
+                                      style: TextStyle(color: Color(0xff11b719)),
+                                    ),
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                  setState(() {
+                                    selectedCurrency = currencyValue;
+                                  });
+                                },
+                                value: selectedCurrency,
+                                isExpanded: false,
+                                hint: new Text(
+                                  "Choose Currency Type",
+                                  style: TextStyle(color: Color(0xff11b719)),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        return CircularProgressIndicator();
+                      }),
                 ],
               ),
             ],
