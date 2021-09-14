@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
-import 'package:recipeworld/model/User.dart';
 import 'package:recipeworld/pages/authpages/signIn.dart';
 import 'package:recipeworld/services/firebaseservice.dart';
+import 'package:recipeworld/utils/userSecureStorage.dart';
 import 'package:recipeworld/widgets/userPostCards.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,76 +16,80 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool isSubscribed;
-  buildsubscribebutton() {
-    bool isProfileOwner = currentuser.userId == widget.profileid;
+  String userid;
+  bool isFollowing;
+  buildUnfollowbutton() {
+    bool isProfileOwner = userid == widget.profileid;
     if (isProfileOwner) {
       return buildButton(text: "Edit profile", function: handleEditProfile);
-    } else if (isSubscribed) {
-      return buildButton(text: "unsubscribe", function: handleUnsubscribeUser);
-    } else if (!isSubscribed) {
-      return buildButton(text: "subscribe", function: handleSubscribeUser);
+    } else if (isFollowing) {
+      return buildButton(text: "unfollow", function: handleUnfollowUser);
+    } else if (!isFollowing) {
+      return buildButton(text: "follow", function: handleFollowUser);
     }
   }
 
   @override
   void initState() {
     super.initState();
-    // getSubscribers();
+    // getUnfollowrs();
     // getSubscription();
-    checkIfSubscribed();
+    init();
   }
 
-  checkIfSubscribed() async {
-    DocumentSnapshot doc = await subscriptionsRef
+  Future init() async {
+    final id = await UserSecureStorage.getUserId();
+    setState(() {
+      this.userid = id;
+    });
+    checkIfFollowd();
+  }
+
+   checkIfFollowd() async {
+    DocumentSnapshot doc = await followersRef
         .doc(widget.profileid)
-        .collection('userSubscriptions')
-        .doc(FirebaseService.getCurrentUID().toString())
+        .collection('userFollowers')
+        .doc(userid)
         .get();
+
     setState(() {
       print(doc.exists);
-      isSubscribed = doc.exists;
+      isFollowing = doc.exists;
     });
   }
 
-  handleUnsubscribeUser() {
-    print("subs called");
-    setState(() {
-      isSubscribed = false;
-    });
-    subscribersRef
+  handleUnfollowUser() {
+    followersRef
         .doc(widget.profileid)
-        .collection('userSubscribers')
-        .doc(FirebaseService.getCurrentUID().toString())
+        .collection('userFollowers')
+        .doc(this.userid)
         .get()
         .then((value) => {
-              if (value.exists) {value.reference.delete()}
+              if (value.exists) {value.reference.delete()},
             });
-    subscriptionsRef
-        .doc(FirebaseService.getCurrentUID().toString())
-        .collection("userSubscriptions")
+    followingRef
+        .doc(this.userid)
+        .collection("userFollowing")
         .doc(widget.profileid)
         .get()
         .then((value) => {
-              if (value.exists) {value.reference.delete()}
+              if (value.exists) {value.reference.delete()},
+              checkIfFollowd()
             });
   }
 
-  handleSubscribeUser() {
-    print("subs called");
-    setState(() {
-      isSubscribed = true;
-    });
-    subscribersRef
+  handleFollowUser() {
+    followersRef
         .doc(widget.profileid)
-        .collection('userSubscribers')
-        .doc(FirebaseService.getCurrentUID().toString())
+        .collection('userFollowers')
+        .doc(this.userid)
         .set({});
-    subscriptionsRef
-        .doc(FirebaseService.getCurrentUID().toString())
-        .collection("userSubscriptions")
+    followingRef
+        .doc(this.userid)
+        .collection("userFollowing")
         .doc(widget.profileid)
         .set({});
+    checkIfFollowd();
   }
 
   handleEditProfile() {
@@ -142,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Column(
                                   children: [
                                     Text(
-                                      "Subscribers",
+                                      "Unfollowrs",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -151,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       "1020",
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    buildsubscribebutton()
+                                    buildUnfollowbutton()
                                   ],
                                 ),
                               ],
@@ -212,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
         style: ElevatedButton.styleFrom(
           textStyle: TextStyle(color: Colors.black),
           elevation: 0,
-          primary: isSubscribed ? Colors.redAccent : AppColors.primaryGreen,
+          primary: isFollowing ? Colors.redAccent : AppColors.primaryGreen,
         ),
         onPressed: () {
           function();

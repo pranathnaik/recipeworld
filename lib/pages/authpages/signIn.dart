@@ -8,12 +8,13 @@ import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 import 'package:recipeworld/model/User.dart';
 import 'package:recipeworld/pages/rootApp.dart';
+import 'package:recipeworld/utils/userSecureStorage.dart';
 import 'package:toast/toast.dart';
 
 Userapp currentuser;
 final usersRef = FirebaseFirestore.instance.collection("users");
-final subscribersRef = FirebaseFirestore.instance.collection("subscribers");
-final subscriptionsRef = FirebaseFirestore.instance.collection("subscriptions");
+final followersRef = FirebaseFirestore.instance.collection("followers");
+final followingRef = FirebaseFirestore.instance.collection("following");
 
 class SignIn extends StatefulWidget {
   const SignIn({Key key}) : super(key: key);
@@ -176,6 +177,7 @@ class _SignInState extends State<SignIn> {
       DocumentSnapshot doc = await usersRef.doc(user.user.uid).get();
       currentuser = Userapp.fromDocument(doc);
       print("currrent user" + currentuser.userId);
+      await UserSecureStorage.setUserId(currentuser.userId);
       Navigator.push(
         context,
         MaterialPageRoute(

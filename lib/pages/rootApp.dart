@@ -9,6 +9,7 @@ import 'package:recipeworld/pages/profilepages/profilePage.dart';
 import 'package:recipeworld/pages/searchpages/searchPage.dart';
 import 'package:recipeworld/pages/trendingPage.dart';
 import 'package:recipeworld/services/firebaseservice.dart';
+import 'package:recipeworld/utils/userSecureStorage.dart';
 
 class RootApp extends StatefulWidget {
   final String currentuserid;
@@ -42,6 +43,8 @@ class RootAppState extends State<RootApp> {
         profileid: FirebaseService.getCurrentUID().toString(),
       ),
     ];
+
+    print(UserSecureStorage.getUserId().toString());
   }
 
   int currentIndex = 0;
