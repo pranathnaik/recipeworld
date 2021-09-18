@@ -26,7 +26,6 @@ class _TimeLineState extends State<TimeLine> {
   }
 
   getTimeLine() async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection("posts").where('userid',isEqualTo: )
     List<Post> posts =
         snapshot.docs.map((doc) => Post.fromDocument(doc)).toList();
     setState(() {
