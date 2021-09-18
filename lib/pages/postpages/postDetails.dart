@@ -79,52 +79,58 @@ class PostDetails extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: SingleChildScrollView(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    postid["RecipeTitle"],
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    'Preparation',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    postid["Preparation"],
-                    style: TextStyle(fontSize: 17),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Time Required " + postid["Time"] + " mins",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Ingredients',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ],
-              )),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: SingleChildScrollView(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      postid["RecipeTitle"],
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      'Preparation',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      postid["Preparation"],
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Time Required " + postid["Time"] + " mins",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Ingredients',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                )),
+              ),
             )
           ],
         ),

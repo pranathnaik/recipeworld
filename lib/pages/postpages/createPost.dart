@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipeworld/pages/rootApp.dart';
 import 'dart:io';
 
 import 'package:recipeworld/services/firebaseservice.dart';
@@ -22,6 +23,7 @@ class _CreatePostState extends State<CreatePost> {
   var selectedCategory;
   File image;
   String imgUrl;
+  bool isUploading = false;
 
   getRecipeTitle(rtitle) {
     this.recipeTitle = rtitle;
@@ -44,7 +46,10 @@ class _CreatePostState extends State<CreatePost> {
     this.ingredients = ingredients;
   }
 
-  createPost() async {
+  handleUploadPost() async {
+    setState(() {
+      isUploading = true;
+    });
     var storageImage = FirebaseStorage.instance
         .ref()
         .child("users")
@@ -52,10 +57,8 @@ class _CreatePostState extends State<CreatePost> {
         .child(image.path);
     var task = storageImage.putFile(image);
     imgUrl = await (await task).ref.getDownloadURL();
-    CollectionReference collectionReference = FirebaseFirestore.instance
-        .collection("posts")
-        .doc(FirebaseService.getCurrentUID().toString())
-        .collection("userposts");
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection("posts");
 
     Map<String, dynamic> userpost = {
       "UserId": uid,
@@ -64,17 +67,22 @@ class _CreatePostState extends State<CreatePost> {
       "Preparation": preparation,
       "Category": selectedCategory,
       "Time": time,
-      "Indredients": ingredientslist
+      "Indredients": ingredientslist,
+      "TimeStamp": timestamp
     };
 
     collectionReference.add(userpost).whenComplete(() {
       Navigator.pushNamed(context, AppRoutes.rootApp);
-    }).catchError((e) => print(e));
+    }).catchError((onError) => print(onError));
+    setState(() {
+      isUploading = false;
+    });
   }
 
   //image
   Future getImage() async {
-    var img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var img = await ImagePicker.pickImage(
+        source: ImageSource.gallery, maxHeight: 675, maxWidth: 960);
     setState(() {
       image = img;
     });
@@ -95,9 +103,11 @@ class _CreatePostState extends State<CreatePost> {
         ),
         actions: [
           InkWell(
-            onTap: () {
-              createPost();
-            },
+            onTap: isUploading
+                ? null
+                : () {
+                    handleUploadPost();
+                  },
             child: Row(
               children: [
                 Container(
@@ -130,6 +140,7 @@ class _CreatePostState extends State<CreatePost> {
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           child: Column(
             children: [
+              isUploading ? LinearProgressIndicator() : Text(""),
               Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -193,7 +204,6 @@ class _CreatePostState extends State<CreatePost> {
                           stream: _usersStream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-
                               List<DropdownMenuItem> categoryitems = [];
                               for (int i = 0;
                                   i < snapshot.data.docs.length;

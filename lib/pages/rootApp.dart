@@ -1,15 +1,18 @@
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
-import 'package:recipeworld/model/User.dart';
-import 'package:recipeworld/pages/HomePage.dart';
-import 'package:recipeworld/pages/authpages/signIn.dart';
+import 'package:recipeworld/pages/timeLine.dart';
 import 'package:recipeworld/pages/profilepages/profilePage.dart';
 import 'package:recipeworld/pages/searchpages/searchPage.dart';
 import 'package:recipeworld/pages/trendingPage.dart';
 import 'package:recipeworld/services/firebaseservice.dart';
 import 'package:recipeworld/utils/userSecureStorage.dart';
+
+final timestamp = DateTime.now();
+final timelineRef = FirebaseFirestore.instance.collection("timeline");
 
 class RootApp extends StatefulWidget {
   final String currentuserid;
@@ -36,15 +39,13 @@ class RootAppState extends State<RootApp> {
     super.initState();
     this.checkAuthentification();
     pages = [
-      HomePage(),
+      TimeLine(currentuserid: UserSecureStorage.getUserId().toString()),
       SearchPage(),
       TrendingPage(),
       ProfilePage(
         profileid: FirebaseService.getCurrentUID().toString(),
       ),
     ];
-
-    print(UserSecureStorage.getUserId().toString());
   }
 
   int currentIndex = 0;

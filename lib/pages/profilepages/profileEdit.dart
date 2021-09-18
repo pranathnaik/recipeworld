@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
@@ -15,6 +16,7 @@ class ProfileEdit extends StatefulWidget {
 
 class _ProfileEditState extends State<ProfileEdit> {
   final String uid = FirebaseService.getCurrentUID();
+  FirebaseAuth auth = FirebaseAuth.instance;
   String uname, ubio;
   File image;
   String imgUrl;
@@ -46,7 +48,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     };
 
     documentReference.set(users).whenComplete(() {
-      Navigator.pushNamed(context, AppRoutes.rootApp);
+      auth.signOut();
     }).catchError((e) => print(e));
   }
 

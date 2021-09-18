@@ -176,7 +176,7 @@ class _SignInState extends State<SignIn> {
           email: _email, password: _password);
       DocumentSnapshot doc = await usersRef.doc(user.user.uid).get();
       currentuser = Userapp.fromDocument(doc);
-      print("currrent user" + currentuser.userId);
+
       await UserSecureStorage.setUserId(currentuser.userId);
       Navigator.push(
         context,

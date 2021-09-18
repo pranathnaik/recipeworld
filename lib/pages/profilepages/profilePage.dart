@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/pages/authpages/signIn.dart';
-import 'package:recipeworld/services/firebaseservice.dart';
 import 'package:recipeworld/utils/userSecureStorage.dart';
 import 'package:recipeworld/widgets/userPostCards.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String profileid;
+  String profileid;
   ProfilePage({this.profileid});
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -19,6 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
   String userid;
   bool isFollowing;
   buildUnfollowbutton() {
+    print("userid " + userid);
+    print("profileid" + widget.profileid);
     bool isProfileOwner = userid == widget.profileid;
     if (isProfileOwner) {
       return buildButton(text: "Edit profile", function: handleEditProfile);
@@ -35,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
     // getUnfollowrs();
     // getSubscription();
     init();
+    checkIfFollowd();
   }
 
   Future init() async {
@@ -42,20 +44,19 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       this.userid = id;
     });
-    checkIfFollowd();
   }
 
-   checkIfFollowd() async {
+  checkIfFollowd() async {
     DocumentSnapshot doc = await followersRef
         .doc(widget.profileid)
         .collection('userFollowers')
         .doc(userid)
         .get();
 
-    setState(() {
-      print(doc.exists);
-      isFollowing = doc.exists;
-    });
+    print(doc.exists);
+    isFollowing = doc.exists;
+    buildUnfollowbutton();
+    print("following status " + isFollowing.toString());
   }
 
   handleUnfollowUser() {
@@ -73,7 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(widget.profileid)
         .get()
         .then((value) => {
-              if (value.exists) {value.reference.delete()},
+              if (value.exists)
+                {
+                  value.reference.delete().then((value) {
+                    setState(() {});
+                  })
+                },
               checkIfFollowd()
             });
   }
@@ -88,8 +94,10 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(this.userid)
         .collection("userFollowing")
         .doc(widget.profileid)
-        .set({});
-    checkIfFollowd();
+        .set({}).then((value) {
+      setState(() {});
+      checkIfFollowd();
+    });
   }
 
   handleEditProfile() {
@@ -198,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     thickness: 0.6,
                     color: Colors.black,
                   ),
-                  UserPostCards()
+                  UserPostCards(currentUserId: widget.profileid)
                 ],
               );
             }

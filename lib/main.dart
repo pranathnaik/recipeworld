@@ -10,7 +10,7 @@ import 'package:recipeworld/pages/authpages/signUp.dart';
 import 'package:recipeworld/pages/profilepages/profilePage.dart';
 import 'package:recipeworld/pages/trendingPage.dart';
 import 'package:recipeworld/pages/verifyScreen.dart';
-import 'pages/HomePage.dart';
+import 'pages/timeLine.dart';
 import 'package:recipeworld/pages/postpages/createPost.dart';
 
 Future<void> main() async {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.rootApp: (context) => RootApp(),
         AppRoutes.signIn: (context) => SignIn(),
-        AppRoutes.homeRoute: (context) => HomePage(),
+        AppRoutes.homeRoute: (context) => TimeLine(),
         AppRoutes.postDetails: (context) => PostDetails(),
         AppRoutes.signUp: (context) => SignUp(),
         AppRoutes.profilePage: (context) => ProfilePage(),

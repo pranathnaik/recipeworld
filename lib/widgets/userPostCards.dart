@@ -6,12 +6,25 @@ import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/pages/postpages/postDetails.dart';
 import 'package:recipeworld/services/firebaseservice.dart';
 
-class UserPostCards extends StatelessWidget {
-  final Future<QuerySnapshot> _userpoststream = FirebaseFirestore.instance
-      .collection('posts')
-      .doc(FirebaseService.getCurrentUID().toString())
-      .collection("userposts")
-      .get();
+class UserPostCards extends StatefulWidget {
+  final String currentUserId;
+  UserPostCards({this.currentUserId});
+  @override
+  _UserPostCardsState createState() => _UserPostCardsState();
+}
+
+class _UserPostCardsState extends State<UserPostCards> {
+  Future<QuerySnapshot> _userpoststream;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _userpoststream = FirebaseFirestore.instance
+        .collection('posts')
+        .where("UserId", isEqualTo: widget.currentUserId)
+        .get();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = SizeConfig.getHeight(context);
@@ -20,24 +33,11 @@ class UserPostCards extends StatelessWidget {
       child: FutureBuilder<QuerySnapshot>(
           future: _userpoststream,
           builder: (context, snapshot) {
-            if (!snapshot.hasData)
-              return Center(child: CircularProgressIndicator());
-            if (snapshot.connectionState == ConnectionState.done)
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("you dont have any post "),
-                  InkWell(
-                    child: Text('create post',
-                        style: TextStyle(
-                            color: AppColors.primaryGreen, fontSize: 18)),
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.createPost),
-                  ),
-                ],
-              );
-            final List<DocumentSnapshot> documents = snapshot.data.docs;
-            if (snapshot.hasData)
+            List<DocumentSnapshot> documents;
+            if (snapshot.connectionState == ConnectionState.done) {
+              print(snapshot.data.docs);
+              documents = snapshot.data.docs;
+
               return ListView(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
@@ -104,6 +104,23 @@ class UserPostCards extends StatelessWidget {
                         ))
                     .toList(),
               );
+            } else if (snapshot.connectionState == ConnectionState.none)
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("you dont have any post "),
+                  InkWell(
+                    child: Text('create post',
+                        style: TextStyle(
+                            color: AppColors.primaryGreen, fontSize: 18)),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.createPost),
+                  ),
+                ],
+              );
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }),
     );
   }
