@@ -26,14 +26,7 @@ class _PostCardsState extends State<PostCards> {
         followinguserid.add(element.id);
       });
     });
-    QuerySnapshot docs;
-    docs = await FirebaseFirestore.instance
-        .collection('posts')
-        .where('UserIds', arrayContainsAny: [...followinguserid])
-        .get()
-        .then((value) {
-          print(value.size);
-        });
+ 
   }
 
   @override
@@ -45,8 +38,7 @@ class _PostCardsState extends State<PostCards> {
     _timelinepoststream = FirebaseFirestore.instance
         .collection('posts')
         .where('UserIds', arrayContainsAny: [
-      "6u5A5x7ypINGhf9rmxvtLf16o1i2",
-      "T1LY6JmPYBXe8HDQSMet3XABzfR2"
+     ...followinguserid
     ]).get();
   }
 

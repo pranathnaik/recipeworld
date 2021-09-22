@@ -31,6 +31,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<QuerySnapshot> searchResultFuture;
+
   handleSearch(String query) {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection("users");
@@ -47,12 +48,12 @@ class _SearchPageState extends State<SearchPage> {
   handlePostSearch(String query) {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection("posts");
-    Future<QuerySnapshot> users = collectionReference
-        .where("UserName", isGreaterThanOrEqualTo: query)
+    Future<QuerySnapshot> posts = collectionReference
+        .where("RecipeTitle", isGreaterThanOrEqualTo: query)
         .get();
 
     setState(() {
-      searchResultFuture = users;
+      searchPostResultFuture = posts;
     });
   }
 
@@ -67,7 +68,10 @@ class _SearchPageState extends State<SearchPage> {
         appBar: AppBar(
           title: CupertinoSearchTextField(
             suffixIcon: Icon(Icons.cancel_outlined),
-            onSubmitted: handleSearch,
+            onSubmitted: (s) {
+              handleSearch(s);
+              handlePostSearch(s);
+            },
           ),
           backgroundColor: AppColors.backColor,
           elevation: 0,
@@ -86,12 +90,11 @@ class _SearchPageState extends State<SearchPage> {
 
   FutureBuilder postcontainer() {
     return FutureBuilder(
-      future: searchResultFuture,
+      future: searchPostResultFuture,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasData) {
+        } else if (snapshot.hasData) {
           List<PostResult> searchResults = [];
           snapshot.data.docs.forEach((doc) {
             Post post = Post.fromDocument(doc);
