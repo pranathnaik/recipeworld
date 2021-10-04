@@ -41,7 +41,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("users").doc(uid);
     Map<String, dynamic> users = {
-      "UserId": uid,
+      "UserId": [uid],
       "UserName": uname,
       "UserBio": ubio,
       "ProfileImage": imgUrl

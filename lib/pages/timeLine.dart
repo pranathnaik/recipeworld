@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/model/Post.dart';
-
-import 'package:recipeworld/pages/rootApp.dart';
-import 'package:recipeworld/widgets/PostCards.dart';
 import 'package:recipeworld/config/size.dart';
+import 'package:recipeworld/widgets/postCards.dart';
 
 class TimeLine extends StatefulWidget {
-  final String currentuserid;
-  TimeLine({this.currentuserid});
-
   @override
   _TimeLineState createState() => _TimeLineState();
 }
@@ -21,16 +16,8 @@ class _TimeLineState extends State<TimeLine> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-    getTimeLine();
-  }
 
-  getTimeLine() async {
-    List<Post> posts =
-        snapshot.docs.map((doc) => Post.fromDocument(doc)).toList();
-    setState(() {
-      this.posts = posts;
-    });
+    super.initState();
   }
 
   buildTimeLine() {
@@ -77,10 +64,7 @@ class _TimeLineState extends State<TimeLine> {
               )),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () => getTimeLine(),
-        child: buildTimeLine(),
-      ),
+      body: PostCards(),
     );
   }
 }

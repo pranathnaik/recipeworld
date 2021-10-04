@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +8,12 @@ import 'package:recipeworld/pages/profilepages/profilePage.dart';
 import 'package:recipeworld/pages/searchpages/searchPage.dart';
 import 'package:recipeworld/pages/trendingPage.dart';
 import 'package:recipeworld/services/firebaseservice.dart';
-import 'package:recipeworld/utils/userSecureStorage.dart';
 
 final timestamp = DateTime.now();
-final timelineRef = FirebaseFirestore.instance.collection("timeline");
+
+final followingRef = FirebaseFirestore.instance.collection("following");
+
+
 
 class RootApp extends StatefulWidget {
   final String currentuserid;
@@ -39,7 +40,7 @@ class RootAppState extends State<RootApp> {
     super.initState();
     this.checkAuthentification();
     pages = [
-      TimeLine(currentuserid: UserSecureStorage.getUserId().toString()),
+      TimeLine(),
       SearchPage(),
       TrendingPage(),
       ProfilePage(
