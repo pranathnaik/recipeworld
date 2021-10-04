@@ -15,10 +15,14 @@ class PostCards extends StatefulWidget {
 }
 
 class _PostCardsState extends State<PostCards> {
+  String currentuserid;
+  // Map likes;
+  // int likeCount;
+  // bool isLiked;
   List<String> followinguserid = [];
   Future<QuerySnapshot> _timelinepoststream;
   getAllFollowingId() async {
-    String currentuserid = await UserSecureStorage.getUserId();
+    currentuserid = await UserSecureStorage.getUserId();
     print(currentuserid);
     await followingRef
         .doc(currentuserid)
@@ -46,6 +50,20 @@ class _PostCardsState extends State<PostCards> {
     getAllFollowingId();
   }
 
+  // handleLikePost() {
+  //   bool _isLiked = likes[currentuserid] == true;
+  //
+  //   if(_isLiked){
+  //     postsRef
+  //     .document(userId)
+  //     .collection()
+  //     setState(() {
+  //       likeCount -= 1;
+  //       isLiked = false;
+  //       likes[currentuserid] = false;
+  //     });
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.height;
@@ -144,7 +162,11 @@ class _PostCardsState extends State<PostCards> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      InkWell(child: Icon(Icons.thumb_up)),
+                                      InkWell(
+                                        // onTap: (){
+                                        //  if ()
+                                        // },
+                                          child: Icon(Icons.thumb_up)),
                                       InkWell(
                                         onTap: () {
                                           Navigator.push(
