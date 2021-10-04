@@ -239,7 +239,6 @@ class _ProfilePageState extends State<ProfilePage> {
       case 1:
         final auth = FirebaseAuth.instance;
         auth.signOut();
-        UserSecureStorage.deleteUserId();
         break;
 
       default:

@@ -22,7 +22,7 @@ class _SearchPageState extends State<SearchPage> {
         shrinkWrap: true,
         children: [
           Text(
-            "search",
+            "Find Users",
             textAlign: TextAlign.center,
           )
         ],
