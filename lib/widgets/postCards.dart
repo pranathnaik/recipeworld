@@ -13,6 +13,7 @@ class PostCards extends StatefulWidget {
   @override
   _PostCardsState createState() => _PostCardsState();
 }
+<<<<<<< HEAD
 
 class _PostCardsState extends State<PostCards> {
   String currentuserid;
@@ -50,7 +51,59 @@ class _PostCardsState extends State<PostCards> {
     getAllFollowingId();
   }
 
+=======
 
+class _PostCardsState extends State<PostCards> {
+  String currentuserid;
+  // Map likes;
+  // int likeCount;
+  // bool isLiked;
+  List<String> followinguserid = [];
+  Future<QuerySnapshot> _timelinepoststream;
+  getAllFollowingId() async {
+    currentuserid = await UserSecureStorage.getUserId();
+    print(currentuserid);
+    await followingRef
+        .doc(currentuserid)
+        .collection('userFollowing')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        followinguserid.add(element.id);
+      });
+    });
+    _timelinepoststream = FirebaseFirestore.instance
+        .collection('posts')
+        .where('UserIds', arrayContainsAny: [...followinguserid])
+        .get()
+        .whenComplete(() {
+          setState(() {});
+        });
+  }
+>>>>>>> 01c820f24eb2b1226cbfc4cba38da035c1c4cc11
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getAllFollowingId();
+  }
+
+  // handleLikePost() {
+  //   bool _isLiked = likes[currentuserid] == true;
+  //
+  //   if(_isLiked){
+  //     postsRef
+  //     .document(userId)
+  //     .collection()
+  //     setState(() {
+  //       likeCount -= 1;
+  //       isLiked = false;
+  //       likes[currentuserid] = false;
+  //     });
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.height;
