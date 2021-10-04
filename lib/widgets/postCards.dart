@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipeworld/config/routes.dart';
 import 'package:recipeworld/config/size.dart';
 import 'package:recipeworld/config/colors.dart';
 import 'package:recipeworld/pages/authpages/signIn.dart';
+import 'package:recipeworld/pages/postpages/postDetails.dart';
 import 'package:recipeworld/utils/userSecureStorage.dart';
 
 class PostCards extends StatefulWidget {
@@ -26,13 +29,12 @@ class _PostCardsState extends State<PostCards> {
         followinguserid.add(element.id);
       });
     });
-    QuerySnapshot docs;
-    docs = await FirebaseFirestore.instance
+    _timelinepoststream = FirebaseFirestore.instance
         .collection('posts')
         .where('UserIds', arrayContainsAny: [...followinguserid])
         .get()
-        .then((value) {
-          print(value.size);
+        .whenComplete(() {
+          setState(() {});
         });
   }
 
@@ -42,12 +44,6 @@ class _PostCardsState extends State<PostCards> {
     super.initState();
 
     getAllFollowingId();
-    _timelinepoststream = FirebaseFirestore.instance
-        .collection('posts')
-        .where('UserIds', arrayContainsAny: [
-      "6u5A5x7ypINGhf9rmxvtLf16o1i2",
-      "T1LY6JmPYBXe8HDQSMet3XABzfR2"
-    ]).get();
   }
 
   @override
@@ -151,8 +147,14 @@ class _PostCardsState extends State<PostCards> {
                                       InkWell(child: Icon(Icons.thumb_up)),
                                       InkWell(
                                         onTap: () {
-                                          Navigator.pushNamed(
-                                              context, AppRoutes.postDetails);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PostDetails(
+                                                postid: e,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         child: Text('View Recipe',
                                             style: TextStyle(
@@ -171,20 +173,26 @@ class _PostCardsState extends State<PostCards> {
                           height: height / 2.6,
                         ))
                     .toList());
-          } else if (snapshot.connectionState == ConnectionState.none)
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("you have not followed anyone "),
-                InkWell(
-                  child: Text('search and follow someone',
-                      style: TextStyle(
-                          color: AppColors.primaryGreen, fontSize: 18)),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRoutes.searchPage),
-                ),
-              ],
+          } else if (!snapshot.hasData)
+            return Container(
+              constraints: BoxConstraints.expand(),
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("you have not followed anyone "),
+                  InkWell(
+                    child: Text('search and follow someone',
+                        style: TextStyle(
+                            color: AppColors.primaryGreen, fontSize: 18)),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.searchPage),
+                  ),
+                ],
+              ),
             );
+
           return Center(child: CircularProgressIndicator());
         });
   }

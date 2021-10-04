@@ -64,13 +64,7 @@ class _TimeLineState extends State<TimeLine> {
               )),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            PostCards(),
-          ],
-        ),
-      ),
+      body: PostCards(),
     );
   }
 }
