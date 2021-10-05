@@ -42,7 +42,7 @@ class RootAppState extends State<RootApp> {
     pages = [
       TimeLine(),
       SearchPage(),
-      TrendingPage(),
+      // TrendingPage(),
       ProfilePage(
         profileid: FirebaseService.getCurrentUID().toString(),
       ),
@@ -82,10 +82,10 @@ class RootAppState extends State<RootApp> {
             ),
             label: '.',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.trending_up),
-            label: '.',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.trending_up),
+          //   label: '.',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.account_circle_outlined,

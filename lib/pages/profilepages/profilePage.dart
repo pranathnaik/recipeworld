@@ -18,8 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
   String userid;
   bool isFollowing;
   buildUnfollowbutton() {
-    print("userid " + userid);
-    print("profileid" + widget.profileid);
+    // print("userid " + userid);
+    // print("profileid" + widget.profileid);
     bool isProfileOwner = userid == widget.profileid;
     if (isProfileOwner) {
       return buildButton(text: "Edit profile", function: handleEditProfile);
